@@ -1,91 +1,90 @@
-import type { Metadata } from 'next'
+import type { Metadata } from 'next';
+import { draftMode } from 'next/headers';
+import { cache } from 'react';
 
-import { PayloadRedirects } from '@/components/PayloadRedirects'
-import configPromise from '@payload-config'
-import { getPayloadHMR } from '@payloadcms/next/utilities'
-import { draftMode } from 'next/headers'
-import React, { cache } from 'react'
-import { homeStatic } from '@/endpoints/seed/home-static'
+import configPromise from '@payload-config';
+import { getPayloadHMR } from '@payloadcms/next/utilities';
 
-import type { Page as PageType } from '@/payload-types'
+import type { Page as PageType } from '@/payload-types';
+import { RenderBlocks } from '@/payload/blocks/RenderBlocks';
+import { PayloadRedirects } from '@/payload/components/PayloadRedirects';
+import { RenderHero } from '@/payload/components/heros/RenderHero';
+import { generateMeta } from '@/payload/utilities/generateMeta';
 
-import { RenderBlocks } from '@/blocks/RenderBlocks'
-import { RenderHero } from '@/heros/RenderHero'
-import { generateMeta } from '@/utilities/generateMeta'
-import PageClient from './page.client'
+import PageClient from './page.client';
 
 export async function generateStaticParams() {
-  const payload = await getPayloadHMR({ config: configPromise })
+  const payload = await getPayloadHMR({ config: configPromise });
   const pages = await payload.find({
     collection: 'pages',
     draft: false,
     limit: 1000,
-    overrideAccess: false,
-  })
+    overrideAccess: false
+  });
 
   const params = pages.docs
     ?.filter((doc) => {
-      return doc.slug !== 'home'
+      return doc.slug !== 'home';
     })
     .map(({ slug }) => {
-      return { slug }
-    })
+      return { slug };
+    });
 
-  return params
+  return params;
 }
 
 type Args = {
   params: Promise<{
-    slug?: string
-  }>
-}
+    slug?: string;
+  }>;
+};
 
 export default async function Page({ params: paramsPromise }: Args) {
-  const { slug = 'home' } = await paramsPromise
-  const url = '/' + slug
+  const { slug = 'home' } = await paramsPromise;
+  const url = '/' + slug;
 
-  let page: PageType | null
+  let page: PageType | null;
 
   page = await queryPageBySlug({
-    slug,
-  })
-
-  // Remove this code once your website is seeded
-  if (!page && slug === 'home') {
-    page = homeStatic
-  }
+    slug
+  });
 
   if (!page) {
-    return <PayloadRedirects url={url} />
+    return <PayloadRedirects url={url} />;
   }
 
-  const { hero, layout } = page
+  const { hero, layout } = page;
 
   return (
-    <article className="pt-16 pb-24">
+    <article className='pt-16 pb-24'>
       <PageClient />
       {/* Allows redirects for valid pages too */}
-      <PayloadRedirects disableNotFound url={url} />
+      <PayloadRedirects
+        disableNotFound
+        url={url}
+      />
 
       <RenderHero {...hero} />
       <RenderBlocks blocks={layout} />
     </article>
-  )
+  );
 }
 
-export async function generateMetadata({ params: paramsPromise }): Promise<Metadata> {
-  const { slug = 'home' } = await paramsPromise
+export async function generateMetadata({
+  params: paramsPromise
+}): Promise<Metadata> {
+  const { slug = 'home' } = await paramsPromise;
   const page = await queryPageBySlug({
-    slug,
-  })
+    slug
+  });
 
-  return generateMeta({ doc: page })
+  return generateMeta({ doc: page });
 }
 
 const queryPageBySlug = cache(async ({ slug }: { slug: string }) => {
-  const { isEnabled: draft } = await draftMode()
+  const { isEnabled: draft } = await draftMode();
 
-  const payload = await getPayloadHMR({ config: configPromise })
+  const payload = await getPayloadHMR({ config: configPromise });
 
   const result = await payload.find({
     collection: 'pages',
@@ -94,10 +93,10 @@ const queryPageBySlug = cache(async ({ slug }: { slug: string }) => {
     overrideAccess: draft,
     where: {
       slug: {
-        equals: slug,
-      },
-    },
-  })
+        equals: slug
+      }
+    }
+  });
 
-  return result.docs?.[0] || null
-})
+  return result.docs?.[0] || null;
+});

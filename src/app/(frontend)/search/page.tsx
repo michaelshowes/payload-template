@@ -1,21 +1,24 @@
-import type { Metadata } from 'next/types'
+import type { Metadata } from 'next/types';
 
-import { CollectionArchive } from '@/components/CollectionArchive'
-import configPromise from '@payload-config'
-import { getPayloadHMR } from '@payloadcms/next/utilities'
-import React from 'react'
-import { Post } from '@/payload-types'
-import { Search } from '@/search/Component'
-import PageClient from './page.client'
+import configPromise from '@payload-config';
+import { getPayloadHMR } from '@payloadcms/next/utilities';
+
+import { CollectionArchive } from '@/components/CollectionArchive';
+import { Post } from '@/payload-types';
+import { Search } from '@/payload/search/Component';
+
+import PageClient from './page.client';
 
 type Args = {
   searchParams: Promise<{
-    q: string
-  }>
-}
-export default async function Page({ searchParams: searchParamsPromise }: Args) {
-  const { q: query } = await searchParamsPromise
-  const payload = await getPayloadHMR({ config: configPromise })
+    q: string;
+  }>;
+};
+export default async function Page({
+  searchParams: searchParamsPromise
+}: Args) {
+  const { q: query } = await searchParamsPromise;
+  const payload = await getPayloadHMR({ config: configPromise });
 
   const posts = await payload.find({
     collection: 'search',
@@ -27,36 +30,36 @@ export default async function Page({ searchParams: searchParamsPromise }: Args) 
             or: [
               {
                 title: {
-                  like: query,
-                },
+                  like: query
+                }
               },
               {
                 'meta.description': {
-                  like: query,
-                },
+                  like: query
+                }
               },
               {
                 'meta.title': {
-                  like: query,
-                },
+                  like: query
+                }
               },
               {
                 slug: {
-                  like: query,
-                },
-              },
-            ],
-          },
+                  like: query
+                }
+              }
+            ]
+          }
         }
-      : {}),
-  })
+      : {})
+  });
 
   return (
-    <div className="pt-24 pb-24">
+    <div className='pt-24 pb-24'>
       <PageClient />
-      <div className="container mb-16">
-        <div className="prose dark:prose-invert max-w-none">
-          <h1 className="sr-only">Search</h1>
+      <div className='container mb-16'>
+        <div className='prose dark:prose-invert max-w-none'>
+          <h1 className='sr-only'>Search</h1>
           <Search />
         </div>
       </div>
@@ -64,14 +67,14 @@ export default async function Page({ searchParams: searchParamsPromise }: Args) 
       {posts.totalDocs > 0 ? (
         <CollectionArchive posts={posts.docs as unknown as Post[]} />
       ) : (
-        <div className="container">No results found.</div>
+        <div className='container'>No results found.</div>
       )}
     </div>
-  )
+  );
 }
 
 export function generateMetadata(): Metadata {
   return {
-    title: `Payload Website Template Search`,
-  }
+    title: `Payload Website Template Search`
+  };
 }

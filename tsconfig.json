@@ -34,8 +34,14 @@
         "./node_modules/@types/react"
       ],
       "@/*": [
-        "./src/*"
+        "./src/*",
+        "./src/payload/*",
+        "./src/payload/components/*",
+        "./src/payload/fields/*",
       ],
+      "@/collections": [
+        "./src/payload/collections/*"
+      ]
     }
   },
   "include": [
