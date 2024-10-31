@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 import type { PayloadAdminBarProps } from 'payload-admin-bar';
 import { PayloadAdminBar } from 'payload-admin-bar';
 
-import { cn } from '@/payload/utilities/cn';
+import { cn } from '@/lib/utils';
 
 import './index.scss';
 

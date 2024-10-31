@@ -17,9 +17,7 @@ import type { CollectionConfig } from 'payload';
 
 import { authenticated } from '@/payload/access/authenticated';
 import { authenticatedOrPublished } from '@/payload/access/authenticatedOrPublished';
-import { Banner } from '@/payload/blocks/Banner/config';
-import { Code } from '@/payload/blocks/Code/config';
-import { MediaBlock } from '@/payload/blocks/MediaBlock/config';
+import { blocks } from '@/payload/blocks/blockRegistration';
 import { slugField } from '@/payload/fields/slug';
 import { generatePreviewPath } from '@/payload/utilities/generatePreviewPath';
 
@@ -77,7 +75,7 @@ export const Posts: CollectionConfig = {
                     HeadingFeature({
                       enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4']
                     }),
-                    BlocksFeature({ blocks: [Banner, Code, MediaBlock] }),
+                    BlocksFeature({ blocks }),
                     FixedToolbarFeature(),
                     InlineToolbarFeature(),
                     HorizontalRuleFeature()

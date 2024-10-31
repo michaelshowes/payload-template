@@ -1,8 +1,8 @@
 import React from 'react';
 
+import { cn } from '@/lib/utils';
 import type { Page } from '@/payload-types';
 import RichText from '@/payload/components/RichText';
-import { cn } from '@/payload/utilities/cn';
 
 import { CMSLink } from '../../components/Link';
 

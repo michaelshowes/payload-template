@@ -1,7 +1,7 @@
 import React from 'react';
 
+import { cn } from '@/lib/utils';
 import type { Post } from '@/payload-types';
-import { cn } from '@/payload/utilities/cn';
 
 import { Card } from '../Card';
 

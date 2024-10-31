@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { cn } from '@/payload/utilities/cn';
+import { cn } from '@/lib/utils';
 
 import { serializeLexical } from './serialize';
 

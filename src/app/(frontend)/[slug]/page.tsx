@@ -45,9 +45,7 @@ export default async function Page({ params: paramsPromise }: Args) {
 
   let page: PageType | null;
 
-  page = await queryPageBySlug({
-    slug
-  });
+  page = await queryPageBySlug({ slug });
 
   if (!page) {
     return <PayloadRedirects url={url} />;

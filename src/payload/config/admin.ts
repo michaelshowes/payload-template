@@ -9,11 +9,7 @@ const dirname = path.dirname(filename);
 
 export const admin: Config['admin'] = {
   components: {
-    // The `BeforeLogin` component renders a message that you see while logging into your admin panel.
-    // Feel free to delete this at any time. Simply remove the line below and the import `BeforeLogin` statement on line 15.
     beforeLogin: ['@/components/BeforeLogin'],
-    // The `BeforeDashboard` component renders the 'welcome' block that you see after logging into your admin panel.
-    // Feel free to delete this at any time. Simply remove the line below and the import `BeforeDashboard` statement on line 15.
     beforeDashboard: ['@/components/BeforeDashboard']
   },
   importMap: {
@@ -41,5 +37,13 @@ export const admin: Config['admin'] = {
         height: 900
       }
     ]
-  }
+  },
+  autoLogin:
+    process.env.NEXT_PUBLIC_ENABLE_AUTOLOGIN === 'true'
+      ? {
+          email: 'michael.showes@gmail.com',
+          password: 'admin',
+          prefillOnly: true
+        }
+      : false
 };

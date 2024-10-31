@@ -7,9 +7,9 @@ import { GeistSans } from 'geist/font/sans';
 
 import { Footer } from '@/components/Footer/Component';
 import { Header } from '@/components/Header/Component';
+import { cn } from '@/lib/utils';
 import { AdminBar } from '@/payload/components/AdminBar';
 import { LivePreviewListener } from '@/payload/components/LivePreviewListener';
-import { cn } from '@/payload/utilities/cn';
 import { mergeOpenGraph } from '@/payload/utilities/mergeOpenGraph';
 import { Providers } from '@/providers';
 import { InitTheme } from '@/providers/Theme/InitTheme';

@@ -3,8 +3,8 @@
 import Link from 'next/link';
 import React, { Fragment } from 'react';
 
+import { cn } from '@/lib/utils';
 import type { Post } from '@/payload-types';
-import { cn } from '@/payload/utilities/cn';
 import useClickableCard from '@/payload/utilities/useClickableCard';
 
 import { Media } from '../Media';

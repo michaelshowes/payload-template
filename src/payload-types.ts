@@ -118,7 +118,7 @@ export interface Page {
       | null;
     media?: (number | null) | Media;
   };
-  layout: (CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock)[];
+  layout: (CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock | SampleBlock)[];
   meta?: {
     title?: string | null;
     image?: (number | null) | Media;
@@ -564,6 +564,18 @@ export interface Form {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SampleBlock".
+ */
+export interface SampleBlock {
+  image?: (number | null) | Media;
+  title: string;
+  description?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'sampleBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -818,6 +830,15 @@ export interface PagesSelect<T extends boolean = true> {
               form?: T;
               enableIntro?: T;
               introContent?: T;
+              id?: T;
+              blockName?: T;
+            };
+        sampleBlock?:
+          | T
+          | {
+              image?: T;
+              title?: T;
+              description?: T;
               id?: T;
               blockName?: T;
             };

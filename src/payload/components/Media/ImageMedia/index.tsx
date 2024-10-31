@@ -5,7 +5,7 @@ import NextImage from 'next/image';
 import React from 'react';
 
 import cssVariables from '@/cssVariables';
-import { cn } from '@/payload/utilities/cn';
+import { cn } from '@/lib/utils';
 
 import type { Props as MediaProps } from '../types';
 

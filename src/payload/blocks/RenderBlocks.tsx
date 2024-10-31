@@ -2,19 +2,7 @@ import React, { Fragment } from 'react';
 
 import type { Page } from '@/payload-types';
 
-import { ArchiveBlock } from './ArchiveBlock/Component';
-import { CallToActionBlock } from './CallToAction/Component';
-import { ContentBlock } from './Content/Component';
-import { FormBlock } from './Form/Component';
-import { MediaBlock } from './MediaBlock/Component';
-
-const blockComponents = {
-  archive: ArchiveBlock,
-  content: ContentBlock,
-  cta: CallToActionBlock,
-  formBlock: FormBlock,
-  mediaBlock: MediaBlock
-};
+import { blockComponents } from './blockRegistration';
 
 export const RenderBlocks: React.FC<{
   blocks: Page['layout'][0][];
@@ -35,6 +23,7 @@ export const RenderBlocks: React.FC<{
             if (Block) {
               return (
                 <div
+                  id={`${blockType}-${index}`}
                   className='my-16'
                   key={index}
                 >

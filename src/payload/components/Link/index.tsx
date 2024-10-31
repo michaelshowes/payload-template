@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import React from 'react';
 
+import { cn } from '@/lib/utils';
 import type { Page, Post } from '@/payload-types';
-import { cn } from '@/payload/utilities/cn';
 
 import { Button, ButtonProps } from '../ui/button';
 

@@ -1,5 +1,7 @@
+import path from 'path';
 import { buildConfig } from 'payload';
 import sharp from 'sharp';
+import { fileURLToPath } from 'url';
 
 import { Footer } from './components/Footer/config';
 import { Header } from './components/Header/config';
@@ -12,18 +14,23 @@ import { admin } from './payload/config/admin';
 import { db } from './payload/config/db';
 import { editor } from './payload/config/editor';
 import { plugins } from './payload/config/plugins';
-import { typescript } from './payload/config/typescript';
+
+const filename = fileURLToPath(import.meta.url);
+const dirname = path.dirname(filename);
 
 export default buildConfig({
   admin,
   editor,
   db,
+  plugins,
+  sharp,
   collections: [Pages, Posts, Media, Categories, Users],
   cors: [process.env.PAYLOAD_PUBLIC_SERVER_URL || ''].filter(Boolean),
   csrf: [process.env.PAYLOAD_PUBLIC_SERVER_URL || ''].filter(Boolean),
   globals: [Header, Footer],
-  plugins,
   secret: process.env.PAYLOAD_SECRET!,
-  sharp,
-  typescript
+  serverURL: process.env.PAYLOAD_PUBLIC_SERVER_URL,
+  typescript: {
+    outputFile: path.resolve(dirname, 'payload-types.ts')
+  }
 });
