@@ -8,10 +8,8 @@ import { ContentBlock } from './Content/Component';
 import { FormBlock } from './Form/Component';
 import { MediaBlock as MediaBlockComponent } from './MediaBlock/Component';
 import { MediaBlock } from './MediaBlock/config';
-import SampleBlockComponent from './SampleBlock/SampleBlock';
-import { SampleBlock } from './SampleBlock/sampleBlock.config';
 
-export const blocks = [Banner, Code, MediaBlock, SampleBlock];
+export const blocks = [Banner, Code, MediaBlock];
 
 export const blockComponents = {
   code: CodeBlock,
@@ -20,6 +18,5 @@ export const blockComponents = {
   content: ContentBlock,
   cta: CallToActionBlock,
   formBlock: FormBlock,
-  mediaBlock: MediaBlockComponent,
-  sampleBlock: SampleBlockComponent
+  mediaBlock: MediaBlockComponent
 };

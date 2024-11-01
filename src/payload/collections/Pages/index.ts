@@ -14,7 +14,6 @@ import { CallToAction } from '@/payload/blocks/CallToAction/config';
 import { Content } from '@/payload/blocks/Content/config';
 import { FormBlock } from '@/payload/blocks/Form/config';
 import { MediaBlock } from '@/payload/blocks/MediaBlock/config';
-import { SampleBlock } from '@/payload/blocks/SampleBlock/sampleBlock.config';
 import { hero } from '@/payload/components/heros/config';
 import { slugField } from '@/payload/fields/slug';
 import { populatePublishedAt } from '@/payload/hooks/populatePublishedAt';
@@ -70,14 +69,7 @@ export const Pages: CollectionConfig = {
             {
               name: 'layout',
               type: 'blocks',
-              blocks: [
-                CallToAction,
-                Content,
-                MediaBlock,
-                Archive,
-                FormBlock,
-                SampleBlock
-              ],
+              blocks: [CallToAction, Content, MediaBlock, Archive, FormBlock],
               required: true
             }
           ],

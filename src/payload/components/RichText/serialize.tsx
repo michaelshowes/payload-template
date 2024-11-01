@@ -10,7 +10,6 @@ import { BannerBlock } from '@/payload/blocks/Banner/Component';
 import { CallToActionBlock } from '@/payload/blocks/CallToAction/Component';
 import { CodeBlock, CodeBlockProps } from '@/payload/blocks/Code/Component';
 import { MediaBlock } from '@/payload/blocks/MediaBlock/Component';
-import SampleBlock from '@/payload/blocks/SampleBlock/SampleBlock';
 import { CMSLink } from '@/payload/components/Link';
 
 import {
@@ -28,7 +27,6 @@ export type NodeTypes =
   | SerializedBlockNode<
       | Extract<Page['layout'][0], { blockType: 'cta' }>
       | Extract<Page['layout'][0], { blockType: 'mediaBlock' }>
-      | Extract<Page['layout'][0], { blockType: 'sampleBlock' }>
       | BannerBlockProps
       | CodeBlockProps
     >;
@@ -120,14 +118,6 @@ export function serializeLexical({ nodes }: Props): JSX.Element {
           }
 
           switch (blockType) {
-            case 'sampleBlock':
-              return (
-                <SampleBlock
-                  className={'col-start-2'}
-                  key={index}
-                  {...block}
-                />
-              );
             case 'cta':
               return (
                 <CallToActionBlock
