@@ -14,13 +14,13 @@ type Args = {
   children: React.ReactNode;
 };
 
-const Layout = ({ children }: Args) => (
-  <RootLayout
-    importMap={importMap}
-    config={configPromise}
-  >
-    {children}
-  </RootLayout>
-);
-
-export default Layout;
+export default function Layout({ children }: Args) {
+  return (
+    <RootLayout
+      importMap={importMap}
+      config={configPromise}
+    >
+      {children}
+    </RootLayout>
+  );
+}

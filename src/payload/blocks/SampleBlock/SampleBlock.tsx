@@ -1,5 +1,6 @@
 import Image from 'next/image';
 
+import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import type { Media, SampleBlock } from '@/payload-types';
 
@@ -27,6 +28,7 @@ export default function SampleBlock({
       </div>
       <h2 className={'text-2xl font-bold uppercase'}>{title}</h2>
       <p>{description}</p>
+      <Button>Button</Button>
     </section>
   );
 }

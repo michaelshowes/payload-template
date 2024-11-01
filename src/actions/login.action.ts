@@ -5,11 +5,12 @@ import { cookies as cookieStore } from 'next/headers';
 import payloadConfig from '@payload-config';
 import { getPayloadHMR } from '@payloadcms/next/utilities';
 
-export async function loginAction(_, formData: FormData) {
+import { LoginSchemaType } from '@/app/(payload)/admin/(auth)/components/LoginForm';
+
+export async function loginAction(values: LoginSchemaType) {
   try {
     const payload = await getPayloadHMR({ config: payloadConfig });
-    const email = formData.get('email') as string;
-    const password = formData.get('password') as string;
+    const { email, password } = values;
     const cookies = await cookieStore();
 
     const res = await payload.login({
