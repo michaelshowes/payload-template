@@ -1,10 +1,34 @@
 import type { Config } from 'tailwindcss';
+import plugin from 'tailwindcss/plugin';
+
+import { boxShadow } from './src/styles/tokens/boxShadow';
+import { colors } from './src/styles/tokens/colors';
+import { fontSize } from './src/styles/tokens/fontSize';
 
 const config: Config = {
   content: ['./src/**/*.{ts,tsx}'],
   darkMode: ['selector', '[data-theme="dark"]'],
-  plugins: [require('tailwindcss-animate'), require('@tailwindcss/typography')],
-  prefix: '',
+  plugins: [
+    require('tailwindcss-animate'),
+    require('@tailwindcss/typography'),
+    plugin(({ addComponents }) => {
+      addComponents({
+        '.gradient-twilight': {
+          backgroundImage: 'linear-gradient(222deg, #003DFF 0%, #CAD1FF 100%)'
+        },
+        '.gradient-nova': {
+          backgroundImage: 'linear-gradient(223deg, #F988CD 0%, #003DFF 100%)'
+        },
+        '.gradient-comet': {
+          backgroundImage: 'linear-gradient(222deg, #DB2796 0%, #FFD9F0 100%)'
+        },
+        '.gradient-solstice': {
+          backgroundImage:
+            'linear-gradient(220deg, #9EF4EE 0%, #39ABCD 51%, #003DFF 100%)'
+        }
+      });
+    })
+  ],
   safelist: [
     'lg:col-span-4',
     'lg:col-span-6',
@@ -20,6 +44,8 @@ const config: Config = {
     'bg-warning/30'
   ],
   theme: {
+    colors,
+    boxShadow,
     container: {
       center: true,
       padding: {
@@ -39,56 +65,10 @@ const config: Config = {
       }
     },
     extend: {
+      fontSize,
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out'
-      },
-      borderRadius: {
-        lg: 'var(--radius)',
-        md: 'calc(var(--radius) - 2px)',
-        sm: 'calc(var(--radius) - 4px)'
-      },
-      colors: {
-        accent: {
-          DEFAULT: 'hsl(var(--accent))',
-          foreground: 'hsl(var(--accent-foreground))'
-        },
-        background: 'hsl(var(--background))',
-        border: 'hsl(var(--border))',
-        card: {
-          DEFAULT: 'hsl(var(--card))',
-          foreground: 'hsl(var(--card-foreground))'
-        },
-        destructive: {
-          DEFAULT: 'hsl(var(--destructive))',
-          foreground: 'hsl(var(--destructive-foreground))'
-        },
-        foreground: 'hsl(var(--foreground))',
-        input: 'hsl(var(--input))',
-        muted: {
-          DEFAULT: 'hsl(var(--muted))',
-          foreground: 'hsl(var(--muted-foreground))'
-        },
-        popover: {
-          DEFAULT: 'hsl(var(--popover))',
-          foreground: 'hsl(var(--popover-foreground))'
-        },
-        primary: {
-          DEFAULT: 'hsl(var(--primary))',
-          foreground: 'hsl(var(--primary-foreground))'
-        },
-        ring: 'hsl(var(--ring))',
-        secondary: {
-          DEFAULT: 'hsl(var(--secondary))',
-          foreground: 'hsl(var(--secondary-foreground))'
-        },
-        success: 'hsl(var(--success))',
-        error: 'hsl(var(--error))',
-        warning: 'hsl(var(--warning))'
-      },
-      fontFamily: {
-        mono: ['var(--font-geist-mono)'],
-        sans: ['var(--font-geist-sans)']
       },
       keyframes: {
         'accordion-down': {

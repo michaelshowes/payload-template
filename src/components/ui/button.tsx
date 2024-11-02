@@ -1,4 +1,6 @@
-import * as React from 'react';
+'use client';
+
+import { ButtonHTMLAttributes, forwardRef, useState } from 'react';
 
 import { Slot } from '@radix-ui/react-slot';
 import { type VariantProps, cva } from 'class-variance-authority';
@@ -6,50 +8,79 @@ import { type VariantProps, cva } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 
 const buttonVariants = cva(
-  'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
+  `relative inline-flex items-center justify-center gap-2 whitespace-nowrap leading-6 rounded-sm tracking-[1px] transition-colors 
+  
+  focus-visible:outline-none focus-visible:before:border-teal-500 
+  
+  disabled:pointer-events-none
+
+  [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0
+
+  before:content-[""] before:inset-0 before:border-2 before:absolute before:border-[transparent] before:rounded-sm`,
   {
     variants: {
       variant: {
-        default:
-          'bg-primary text-primary-foreground shadow hover:bg-primary/90',
-        destructive:
-          'bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90',
-        outline:
-          'border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground',
+        primary:
+          'bg-secondary text-white [&_svg]:fill-white hover:bg-neutral-400 disabled:bg-neutral-200 disabled:text-black [&_svg]:disabled:fill-black',
         secondary:
-          'bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80',
-        ghost: 'hover:bg-accent hover:text-accent-foreground',
-        link: 'text-primary underline-offset-4 hover:underline'
+          'border-2 border-black bg-background hover:border-neutral-400 hover:text-neutral-400 before:inset-[-2px] disabled:border-neutral-200 disabled:bg-neutral-100 [&_svg]:fill-black',
+        tertiary:
+          'bg-primary text-white hover:bg-blue-600 disabled:bg-neutral-200 disabled:text-black [&_svg]:fill-white [&_svg]:disabled:fill-black'
       },
       size: {
-        default: 'h-9 px-4 py-2',
-        sm: 'h-8 rounded-md px-3 text-xs',
-        lg: 'h-10 rounded-md px-8',
-        icon: 'h-9 w-9'
+        default: 'h-[42px] p-2',
+        sm: 'h-[34px] px-2 py-1'
       }
     },
     defaultVariants: {
-      variant: 'default',
+      variant: 'primary',
       size: 'default'
     }
   }
 );
 
 export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+  extends ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   asChild?: boolean;
+  children: string;
+  icon?: React.ReactNode;
 }
 
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, ...props }, ref) => {
+const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+  (
+    { className, children, icon, variant, size, asChild = false, ...props },
+    ref
+  ) => {
+    const [isPressed, setIsPressed] = useState(false);
     const Comp = asChild ? Slot : 'button';
+
     return (
       <Comp
         className={cn(buttonVariants({ variant, size, className }))}
         ref={ref}
         {...props}
-      />
+        onMouseDown={() => setIsPressed(true)}
+        onMouseUp={() => setIsPressed(false)}
+        style={{
+          backgroundColor: (() => {
+            switch (variant) {
+              case 'primary':
+                return isPressed ? '#23263B' : undefined;
+              case 'tertiary':
+                return isPressed ? '#0E297E' : undefined;
+              default:
+                return undefined;
+            }
+          })(),
+          borderColor:
+            variant === 'secondary' && isPressed ? '#23263B' : undefined,
+          color: variant === 'secondary' && isPressed ? '#23263B' : undefined
+        }}
+      >
+        {icon && <span>{icon}</span>}
+        <span>{children}</span>
+      </Comp>
     );
   }
 );

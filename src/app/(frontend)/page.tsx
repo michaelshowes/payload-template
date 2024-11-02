@@ -1,5 +1,3 @@
-import PageTemplate, { generateMetadata } from './[slug]/page';
-
-export default PageTemplate;
-
-export { generateMetadata };
+export default function HomePage() {
+  return <div className={'flex flex-col gap-4 items-start'}></div>;
+}
