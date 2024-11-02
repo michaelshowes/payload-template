@@ -1,7 +1,5 @@
 'use client';
 
-import { useState } from 'react';
-
 import { cn } from '@/lib/utils';
 
 type Args = {
@@ -19,8 +17,6 @@ export default function Chip({
   className,
   active
 }: Args) {
-  const [isActive, setisActive] = useState(active);
-
   return (
     <button
       className={cn(
